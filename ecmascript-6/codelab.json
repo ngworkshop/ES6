@@ -1,0 +1,24 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2019-07-31T11:29:39+02:00",
+  "id": "ecmascript-6",
+  "duration": 15,
+  "title": "Introduzione ad ECMAScript 6",
+  "summary": "Codelab per imparare ECMAScript 6",
+  "source": "codelab.md",
+  "theme": "",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "javascript",
+    "web"
+  ],
+  "tags": [
+    "web"
+  ],
+  "url": "ecmascript-6"
+}
