@@ -1,0 +1,21 @@
+{
+  "name": "ES6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "claat export catlab.md",
+    "serve": "claat serve -addr 127.0.0.1:8080"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://ngworkshop@github.com/ngworkshop/ES6.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ngworkshop/ES6/issues"
+  },
+  "homepage": "https://github.com/ngworkshop/ES6#readme"
+}
