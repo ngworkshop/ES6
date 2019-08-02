@@ -1,6 +1,6 @@
 author: Lorenzo Franceschini
 summary: CatLab per imparare ECMAScript 6
-id: ecmascript-6
+id: [ecmascript-6](https://ecstatic-dubinsky-be1234.netlify.com/#0)
 categories: javascript, web
 environments: Web
 status: Draft
@@ -69,6 +69,8 @@ button.addEventListener('click', function() {
 ```
 * Quali ambienti di esecuzione di JavaScript conosci?
 * Sai cosa succede quando viene eseguito il nostro codice JavaScript?
+* Come funzione l'Hoisting?
+* Sai fare un esempio di codice con una Callback?
 
 #### Risposte
 
@@ -82,6 +84,17 @@ Negative
 ![](./assets/stack_javascript.gif)
 
 Ad ogni esecuzione di un contesto, inseriamo lo stesso in una pila e associamo un environment detto **Lexical Environment** [[Environment]] dove "vivono" le variabili e funzioni interne alla funzione eseguita. Se una funzione esegue un'altra funzione, si dice che crea una **Closure**, una **Chiusura**, come se avvolgesse l'esecuzione della funzione interna e tutto il suo stato permane. Per questo posso accedere, dalle funzioni più interne dette **Inner**, le variabili delle funzioni dette **Outer**. Il Global Execution Context sarà l'Outer Function più esterna ed è il motivo per cui il suo **Scope** è **Globale** ed accessibile a tutti.
+Nel contesto di esecuzione globale ho tutto ciò che non è in una funzione, viene associato con un **Global Object** che nel Browser corrisponde alla **Window**. Quando creo una proprietà nel Global Scope di fatto è una proprietà dell'oggetto globale:
+
+```
+var nome = 'Lorenzo';
+console.log(nome === window.nome); // true
+```
+* Hosting:
+* Codice:
+  ```
+  setTimeout(function() { console.log(this)}, 1000);
+  ```
 
 [Lexical environment and function scope - StackOverflow](https://stackoverflow.com/questions/12599965/lexical-environment-and-function-scope)
 [The JavaScript Lexical Environment Explained - Youtube](https://www.youtube.com/watch?v=1qXypjZu0sU)
