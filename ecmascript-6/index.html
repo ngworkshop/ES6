@@ -44,15 +44,56 @@
 <aside class="special"><p>Uno degli aspetti interessanti di JavaScript è la sua natura dinamica ed espressiva, che permette al linguaggio di essere effettivamente orientato agli oggetti senza usare le classi come blueprint di creazione. In JS possiamo creare oggetti tramite l&#39;ereditarietà (is-a) e per aggregazione (has-a).</p>
 </aside>
 <p>Il nostro primo giorno di lavoro sarà quello di conoscere meglio JavaScript ed in particolare la sesta edizione ES6 in quanto ha portato in JavaScript tantissime novità.</p>
+<h3 is-upgraded>Misura il tuo livello attuale di conoscenza</h3>
+<p>Usa questa sezione per rispondere a delle domande e verificare il tuo attuale livello di conoscenza. Prova a rispondere senza aiuti, successivamente puoi consularti con compagni o strumenti web ed infine leggi le possibili rispose e link ad approfondimenti.</p>
+<ul>
+<li>Analizza il codice e rispondi alle domande nei commenti:<pre><code>button.addEventListener(&#39;click&#39;, function() {
+// chi è il this?
+var addColor = function() {
+// chi è il this qui?
+}
+});
+button.addEventListener(&#39;click&#39;, function() {
+// chi è il this?
+var addColor = () =&gt; {
+// chi è il this qui?
+}
+});
+</code></pre>
+</li>
+<li>Quali ambienti di esecuzione di JavaScript conosci?</li>
+<li>Sai cosa succede quando viene eseguito il nostro codice JavaScript?</li>
+</ul>
+<h3 is-upgraded>Risposte</h3>
+<aside class="warning"><p>Spoiler Alert - Prima di vedere le risposte, prova sempre le tue forze!</p>
+</aside>
+<ul>
+<li>button - (dipende dall&#39;ambiente di esecuzione: window nel browser, global in node) - button - button</li>
+<li>Browser - NodeJS - esistono environment &#34;minori&#34; come Rino (Java Environment) - Electron è di base un env NodeJS</li>
+<li>Avviene una prima fase di Parsing che costruisce una struttura detta AST (Abstract Syntax Tree), successivamente viene generato il &#34;Machine Code&#34; per il processore in uso, il codice viene eseguito. Ogni esecuzione avviene all&#39;interno di un <strong>Contesto di Esecuzione</strong>: <strong>Global Execution Context</strong> uno per l&#39;intera applicazione (non per ogni script) e <strong>Function Execution Context</strong> uno per ogni funzione. Ogni contesto è inserito all&#39;interno di una <strong>Exection Context Stack</strong>. JavaScript è <strong>Single Thread</strong>, questo vuol dire che posso eseguire un solo contesto di esecuzione alla volta, mettendo in &#34;pausa&#34; gli altri. L&#39;escuzione sarà in ordine LIFO (Last In First Out):</li>
+</ul>
+<p class="image-container"><img src="img/6de0e4713fcb9b41.gif"></p>
+<p>Ad ogni esecuzione di un contesto, inseriamo lo stesso in una pila e associamo un environment detto <strong>Lexical Environment</strong> [[Environment]] dove &#34;vivono&#34; le variabili e funzioni interne alla funzione eseguita. Se una funzione esegue un&#39;altra funzione, si dice che crea una <strong>Closure</strong>, una <strong>Chiusura</strong>, come se avvolgesse l&#39;esecuzione della funzione interna e tutto il suo stato permane. Per questo posso accedere, dalle funzioni più interne dette <strong>Inner</strong>, le variabili delle funzioni dette <strong>Outer</strong>. Il Global Execution Context sarà l&#39;Outer Function più esterna ed è il motivo per cui il suo <strong>Scope</strong> è <strong>Globale</strong> ed accessibile a tutti.</p>
+<p><a href="https://stackoverflow.com/questions/12599965/lexical-environment-and-function-scope" target="_blank">Lexical environment and function scope - StackOverflow</a><a href="https://www.youtube.com/watch?v=1qXypjZu0sU" target="_blank">The JavaScript Lexical Environment Explained - Youtube</a></p>
+<h3 is-upgraded>Il tuo turno</h3>
+<ul>
+<li>Scopri di più su ECMAScript cercando quali sono le maggiori novità introdotte, prova a fare una sorta di lista delle main features;</li>
+<li>Cerca di scoprire come possiamo eseguire JavaScript sui moderni Browser;</li>
+<li>Perchè dobbiamo usarlo;</li>
+<li>Qual&#39;è lo stato attuale di supporto nei Browser;</li>
+</ul>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Preparazione Ambiente" duration="15">
-        <aside class="warning"><p>Questo è il box giallo</p>
-</aside>
-<aside class="special"><p>Questo è il box verde</p>
-</aside>
+      <google-codelab-step label="Le nuove caratteristiche di JavaScript ES6" duration="30">
+        <p>In questo <a href="http://es6-features.org" target="_blank">sito</a> puoi trovare la lista delle new features di ES6 con relative comparazione dell&#39;eventuale codice in ES5.</p>
+<ul>
+<li>ES5: Pienamente supportato da tutti i browser ed è &#34;pronto all&#39;uso&#34;;</li>
+<li>ES6-ES7-ES8: Supportato dai browser moderni, alcune funzionalità hanno bisogno di usare polyfill e transpilazione;</li>
+<li>ES9-ES10: Versioni future riferite anche come ESNext. Alcune funzionalità sono disponibili tramite transpilazione e polyfill.</li>
+</ul>
+<p>Molte delle nuove caratteristiche sono degli &#34;zuccherini sintattici&#34;.</p>
 
 
       </google-codelab-step>

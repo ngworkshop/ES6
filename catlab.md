@@ -40,12 +40,60 @@ Positive
 
 Il nostro primo giorno di lavoro sarà quello di conoscere meglio JavaScript ed in particolare la sesta edizione ES6 in quanto ha portato in JavaScript tantissime novità.
 
+#### Il tuo turno
 
-## Preparazione Ambiente
-Duration: 0:15:00
+* Scopri di più su ECMAScript cercando quali sono le maggiori novità introdotte, prova a fare una sorta di lista delle main features;
+* Cerca di scoprire come possiamo eseguire JavaScript sui moderni Browser;
+* Perchè dobbiamo usarlo;
+* Qual'è lo stato attuale di supporto nei Browser;
+
+#### Misura il tuo livello attuale di conoscenza
+
+Usa questa sezione per rispondere a delle domande e verificare il tuo attuale livello di conoscenza. Prova a rispondere senza aiuti, successivamente puoi consularti con compagni o strumenti web ed infine leggi le possibili rispose e link ad approfondimenti.
+
+* Analizza il codice e rispondi alle domande nei commenti:
+```
+button.addEventListener('click', function() {
+  // chi è il this?
+  var addColor = function() {
+    // chi è il this qui?
+  }
+});
+
+button.addEventListener('click', function() {
+  // chi è il this?
+  var addColor = () => {
+    // chi è il this qui?
+  }
+});
+```
+* Quali ambienti di esecuzione di JavaScript conosci?
+* Sai cosa succede quando viene eseguito il nostro codice JavaScript?
+
+#### Risposte
 
 Negative
-: Questo è il box giallo
+: Spoiler Alert - Prima di vedere le risposte, prova sempre le tue forze!
 
-Positive
-: Questo è il box verde
+* button - (dipende dall'ambiente di esecuzione: window nel browser, global in node) - button - button
+* Browser - NodeJS - esistono environment "minori" come Rino (Java Environment) - Electron è di base un env NodeJS
+* Avviene una prima fase di Parsing che costruisce una struttura detta AST (Abstract Syntax Tree), successivamente viene generato il "Machine Code" per il processore in uso, il codice viene eseguito. Ogni esecuzione avviene all'interno di un **Contesto di Esecuzione**: **Global Execution Context** uno per l'intera applicazione (non per ogni script) e **Function Execution Context** uno per ogni funzione. Ogni contesto è inserito all'interno di una **Exection Context Stack**. JavaScript è **Single Thread**, questo vuol dire che posso eseguire un solo contesto di esecuzione alla volta, mettendo in "pausa" gli altri. L'escuzione sarà in ordine LIFO (Last In First Out):
+
+![](./assets/stack_javascript.gif)
+
+Ad ogni esecuzione di un contesto, inseriamo lo stesso in una pila e associamo un environment detto **Lexical Environment** [[Environment]] dove "vivono" le variabili e funzioni interne alla funzione eseguita. Se una funzione esegue un'altra funzione, si dice che crea una **Closure**, una **Chiusura**, come se avvolgesse l'esecuzione della funzione interna e tutto il suo stato permane. Per questo posso accedere, dalle funzioni più interne dette **Inner**, le variabili delle funzioni dette **Outer**. Il Global Execution Context sarà l'Outer Function più esterna ed è il motivo per cui il suo **Scope** è **Globale** ed accessibile a tutti.
+
+[Lexical environment and function scope - StackOverflow](https://stackoverflow.com/questions/12599965/lexical-environment-and-function-scope)
+[The JavaScript Lexical Environment Explained - Youtube](https://www.youtube.com/watch?v=1qXypjZu0sU)
+
+
+## Le nuove caratteristiche di JavaScript ES6
+Duration: 0:30:00
+
+In questo [sito](http://es6-features.org) puoi trovare la lista delle new features di ES6 con relative comparazione dell'eventuale codice in ES5.
+
+* ES5: Pienamente supportato da tutti i browser ed è "pronto all'uso";
+* ES6-ES7-ES8: Supportato dai browser moderni, alcune funzionalità hanno bisogno di usare polyfill e transpilazione;
+* ES9-ES10: Versioni future riferite anche come ESNext. Alcune funzionalità sono disponibili tramite transpilazione e polyfill.
+
+Molte delle nuove caratteristiche sono degli "zuccherini sintattici".
