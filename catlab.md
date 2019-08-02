@@ -1,6 +1,6 @@
 author: Lorenzo Franceschini
 summary: CatLab per imparare ECMAScript 6
-id: [ecmascript-6](https://ecstatic-dubinsky-be1234.netlify.com/#0)
+id: [ecmascript-6](http://tiny.cc/lab-es6)
 categories: javascript, web
 environments: Web
 status: Draft
