@@ -44,6 +44,13 @@
 <aside class="special"><p>Uno degli aspetti interessanti di JavaScript è la sua natura dinamica ed espressiva, che permette al linguaggio di essere effettivamente orientato agli oggetti senza usare le classi come blueprint di creazione. In JS possiamo creare oggetti tramite l&#39;ereditarietà (is-a) e per aggregazione (has-a).</p>
 </aside>
 <p>Il nostro primo giorno di lavoro sarà quello di conoscere meglio JavaScript ed in particolare la sesta edizione ES6 in quanto ha portato in JavaScript tantissime novità.</p>
+<h3 is-upgraded>Il tuo turno</h3>
+<ul>
+<li>Scopri di più su ECMAScript cercando quali sono le maggiori novità introdotte, prova a fare una sorta di lista delle main features;</li>
+<li>Cerca di scoprire come possiamo eseguire JavaScript sui moderni Browser;</li>
+<li>Perchè dobbiamo usarlo;</li>
+<li>Qual&#39;è lo stato attuale di supporto nei Browser;</li>
+</ul>
 <h3 is-upgraded>Misura il tuo livello attuale di conoscenza</h3>
 <p>Usa questa sezione per rispondere a delle domande e verificare il tuo attuale livello di conoscenza. Prova a rispondere senza aiuti, successivamente puoi consularti con compagni o strumenti web ed infine leggi le possibili rispose e link ad approfondimenti.</p>
 <ul>
@@ -63,6 +70,8 @@ var addColor = () =&gt; {
 </li>
 <li>Quali ambienti di esecuzione di JavaScript conosci?</li>
 <li>Sai cosa succede quando viene eseguito il nostro codice JavaScript?</li>
+<li>Come funzione l&#39;Hoisting?</li>
+<li>Sai fare un esempio di codice con una Callback?</li>
 </ul>
 <h3 is-upgraded>Risposte</h3>
 <aside class="warning"><p>Spoiler Alert - Prima di vedere le risposte, prova sempre le tue forze!</p>
@@ -70,17 +79,26 @@ var addColor = () =&gt; {
 <ul>
 <li>button - (dipende dall&#39;ambiente di esecuzione: window nel browser, global in node) - button - button</li>
 <li>Browser - NodeJS - esistono environment &#34;minori&#34; come Rino (Java Environment) - Electron è di base un env NodeJS</li>
-<li>Avviene una prima fase di Parsing che costruisce una struttura detta AST (Abstract Syntax Tree), successivamente viene generato il &#34;Machine Code&#34; per il processore in uso, il codice viene eseguito. Ogni esecuzione avviene all&#39;interno di un <strong>Contesto di Esecuzione</strong>: <strong>Global Execution Context</strong> uno per l&#39;intera applicazione (non per ogni script) e <strong>Function Execution Context</strong> uno per ogni funzione. Ogni contesto è inserito all&#39;interno di una <strong>Exection Context Stack</strong>. JavaScript è <strong>Single Thread</strong>, questo vuol dire che posso eseguire un solo contesto di esecuzione alla volta, mettendo in &#34;pausa&#34; gli altri. L&#39;escuzione sarà in ordine LIFO (Last In First Out):</li>
+<li>Avviene una prima fase di Parsing che costruisce una struttura detta AST (Abstract Syntax Tree), successivamente viene generato il &#34;Machine Code&#34; per il processore in uso, il codice viene eseguito. Dopo aver creato l&#39;AST, ho una fase di creazione del contesto di esecuzione. Ogni esecuzione avviene all&#39;interno di un <strong>Contesto di Esecuzione</strong>: <strong>Global Execution Context</strong> ne ho uno per l&#39;intera applicazione (non per ogni script) e, per ogni funzione, viene creato un <strong>Function Execution Context</strong>. Ogni contesto è inserito all&#39;interno di una <strong>Exection Context Stack</strong>. JavaScript è <strong>Single Thread</strong>, questo vuol dire che posso eseguire un solo contesto di esecuzione alla volta, mettendo in &#34;pausa&#34; gli altri. Questo avviene per ogni esecuzione di una funzione. L&#39;escuzione sarà in ordine LIFO (Last In First Out):</li>
 </ul>
 <p class="image-container"><img src="img/6de0e4713fcb9b41.gif"></p>
-<p>Ad ogni esecuzione di un contesto, inseriamo lo stesso in una pila e associamo un environment detto <strong>Lexical Environment</strong> [[Environment]] dove &#34;vivono&#34; le variabili e funzioni interne alla funzione eseguita. Se una funzione esegue un&#39;altra funzione, si dice che crea una <strong>Closure</strong>, una <strong>Chiusura</strong>, come se avvolgesse l&#39;esecuzione della funzione interna e tutto il suo stato permane. Per questo posso accedere, dalle funzioni più interne dette <strong>Inner</strong>, le variabili delle funzioni dette <strong>Outer</strong>. Il Global Execution Context sarà l&#39;Outer Function più esterna ed è il motivo per cui il suo <strong>Scope</strong> è <strong>Globale</strong> ed accessibile a tutti.</p>
-<p><a href="https://stackoverflow.com/questions/12599965/lexical-environment-and-function-scope" target="_blank">Lexical environment and function scope - StackOverflow</a><a href="https://www.youtube.com/watch?v=1qXypjZu0sU" target="_blank">The JavaScript Lexical Environment Explained - Youtube</a></p>
-<h3 is-upgraded>Il tuo turno</h3>
+<p>Ad ogni esecuzione di un contesto, inseriamo lo stesso in una pila e associamo un environment detto <strong>Lexical Environment</strong> [[Environment]] dove &#34;vivono&#34; le variabili e funzioni interne alla funzione eseguita. Se una funzione esegue un&#39;altra funzione, si dice che crea una <strong>Closure</strong>, una <strong>Chiusura</strong>, come se avvolgesse l&#39;esecuzione della funzione interna e tutto il suo stato permane. Per questo posso accedere, dalle funzioni più interne dette <strong>Inner</strong>, le variabili delle funzioni dette <strong>Outer</strong>. Il Global Execution Context sarà l&#39;Outer Function più esterna ed è il motivo per cui il suo <strong>Scope</strong> è <strong>Globale</strong> ed accessibile a tutti.<br>  Nel contesto di esecuzione globale ho tutto ciò che non è in una funzione, viene associato con un <strong>Global Object</strong> che nel Browser corrisponde alla <strong>Window</strong>. Quando creo una proprietà nel Global Scope di fatto è una proprietà dell&#39;oggetto globale:</p>
+<pre><code>var nome = &#39;Lorenzo&#39;;
+console.log(nome === window.nome); // true
+</code></pre>
+<p>Per ogni contesto di esecuzione, alla sua creazione, ho associato un oggetto che ha tre proprietà:</p>
+<pre><code>- **Variable Object (VO)** che contiene le variabili e le funzioni dichiarate e i parametri formali (argomenti) delle firme delle funzioni. Per ogni funzione avrò una reference alla funzione, per ogni variabile avrò una proprietà impostata ad **undefined**;
+- **Scope Chain**: che contiene il VO corrente e quello dei suoi contesti parent (precedenti). Ogni funzione crea uno scope;
+- **This**
+</code></pre>
 <ul>
-<li>Scopri di più su ECMAScript cercando quali sono le maggiori novità introdotte, prova a fare una sorta di lista delle main features;</li>
-<li>Cerca di scoprire come possiamo eseguire JavaScript sui moderni Browser;</li>
-<li>Perchè dobbiamo usarlo;</li>
-<li>Qual&#39;è lo stato attuale di supporto nei Browser;</li>
+<li><strong>Hosting</strong>: durante la fase di creazione del mio Execution Contest, alla creazione delle proprietà che rappresentano le variabili e le funzioni ho l&#39;&#34;effetto hoisting&#34;, che significa che saranno disponibili prima della fase di esecuzione del contesto stesso. La differenza è che la funzione è disponibile con il suo body perché ho una reference, mentre una variabile sarà impostata ad undefined ed il suo valore sarà definito solo nella fase di esecuzione del contesto. La fase di esecuzione del contesto avviene subito dopo la fase di creazione. L&#39;Hoisting, in parole semplici, significa &#34;portare su&#34;, cioè conoscere già nella prima riga del codice della funzione stessa, le variaibli e le funzioni disponibili; Le function declaration saranno sempre hoisted, mentre le function expression no. Sai la differenza?</li>
+<li>Codice:<pre><code>setTimeout(function() { console.log(this)}, 1000);
+</code></pre>
+</li>
+<li><a href="https://stackoverflow.com/questions/12599965/lexical-environment-and-function-scope" target="_blank">Lexical environment and function scope - StackOverflow</a></li>
+<li><a href="https://www.youtube.com/watch?v=1qXypjZu0sU" target="_blank">The JavaScript Lexical Environment Explained - Youtube</a></li>
+<li><a href="http://dmitrysoshnikov.com/ecmascript/chapter-2-variable-object/" target="_blank">Variable Object</a></li>
 </ul>
 
 

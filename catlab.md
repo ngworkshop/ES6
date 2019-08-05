@@ -1,6 +1,6 @@
 author: Lorenzo Franceschini
-summary: CatLab per imparare ECMAScript 6
-id: [ecmascript-6](http://tiny.cc/lab-es6)
+summary: CatLab per imparare ECMAScript 6 (http://tiny.cc/lab-es6)
+id: ecmascript-6
 categories: javascript, web
 environments: Web
 status: Draft
@@ -24,7 +24,20 @@ Oggi il nostro boss, di seguito troverai una foto di repertorio...
 
 Niente panico. Dobbiamo capire le tecnologie coinvolte e cosa dobbiamo conoscere per poter padroneggiare questo **Framework OpenSource** di **Google**.
 
-Sicuramente abbiamo già una conoscenza base di HTML, CSS e JavaScript. I tre linguaggi alla base di ogni applicazione web. Ognuno con il suo compito ben preciso: il primo è un linguaggio di markup che definisce, attraverso l'uso di elementi, la struttura della pagina web, il secondo è un insieme di regole che, attraverso dei selettori, definiscono il layout grafico degli elementi HTML ed infine JavaScript un linguaggio di programmazione dinamico, object-oriented general-purpose.
+Sicuramente abbiamo già una conoscenza base di HTML, CSS e JavaScript. I tre linguaggi alla base di ogni applicazione web. Ognuno con il suo compito ben preciso: il primo è un linguaggio di markup che definisce, attraverso l'uso di elementi, la struttura della pagina web, il secondo è un insieme di regole che, attraverso dei selettori, definiscono il layout grafico degli elementi HTML ed infine JavaScript un linguaggio di programmazione dinamico, object-oriented general-purpose. JavaScript nasce per la manipolazione del DOM (Document Objet Model), una struttura che rappresenta la pagina HTML e che connette le pagine web al nostro JavaScript.
+
+```
+<html>
+  <head>
+    <meta charsert='utf-8'>
+    <link type='text/css' rel='stylesheet' href='style.css'>
+    <title>Basic HTML Structure</title>
+  </head>
+  <body>
+    <h1>Hello</h1>
+  </body>
+</html>
+```
 
 Negative
 : Il suffiso Java nel nome di JavaScript non è in alcun modo un riferimento o legame al linguaggio Java. Sono due differenti linguaggi, nati con scopi diversi e da aziende diverse. Java è stato sviluppato da Sun Microsystems, JavaScript da Netscape. Il postfisso Script non vuole significare una limitazione del linguaggio.
@@ -79,27 +92,33 @@ Negative
 
 * button - (dipende dall'ambiente di esecuzione: window nel browser, global in node) - button - button
 * Browser - NodeJS - esistono environment "minori" come Rino (Java Environment) - Electron è di base un env NodeJS
-* Avviene una prima fase di Parsing che costruisce una struttura detta AST (Abstract Syntax Tree), successivamente viene generato il "Machine Code" per il processore in uso, il codice viene eseguito. Ogni esecuzione avviene all'interno di un **Contesto di Esecuzione**: **Global Execution Context** uno per l'intera applicazione (non per ogni script) e **Function Execution Context** uno per ogni funzione. Ogni contesto è inserito all'interno di una **Exection Context Stack**. JavaScript è **Single Thread**, questo vuol dire che posso eseguire un solo contesto di esecuzione alla volta, mettendo in "pausa" gli altri. L'escuzione sarà in ordine LIFO (Last In First Out):
+* Avviene una prima fase di Parsing che costruisce una struttura detta AST (Abstract Syntax Tree), successivamente viene generato il "Machine Code" per il processore in uso, il codice viene eseguito. Dopo aver creato l'AST, ho una fase di creazione del contesto di esecuzione. Ogni esecuzione avviene all'interno di un **Contesto di Esecuzione**: **Global Execution Context** ne ho uno per l'intera applicazione (non per ogni script) e, per ogni funzione, viene creato un **Function Execution Context**. Ogni contesto è inserito all'interno di una **Exection Context Stack**. JavaScript è **Single Thread**, questo vuol dire che posso eseguire un solo contesto di esecuzione alla volta, mettendo in "pausa" gli altri. Questo avviene per ogni esecuzione di una funzione. L'escuzione sarà in ordine LIFO (Last In First Out):
 
 ![](./assets/stack_javascript.gif)
 
-Ad ogni esecuzione di un contesto, inseriamo lo stesso in una pila e associamo un environment detto **Lexical Environment** [[Environment]] dove "vivono" le variabili e funzioni interne alla funzione eseguita. Se una funzione esegue un'altra funzione, si dice che crea una **Closure**, una **Chiusura**, come se avvolgesse l'esecuzione della funzione interna e tutto il suo stato permane. Per questo posso accedere, dalle funzioni più interne dette **Inner**, le variabili delle funzioni dette **Outer**. Il Global Execution Context sarà l'Outer Function più esterna ed è il motivo per cui il suo **Scope** è **Globale** ed accessibile a tutti.
-Nel contesto di esecuzione globale ho tutto ciò che non è in una funzione, viene associato con un **Global Object** che nel Browser corrisponde alla **Window**. Quando creo una proprietà nel Global Scope di fatto è una proprietà dell'oggetto globale:
+  Ad ogni esecuzione di un contesto, inseriamo lo stesso in una pila e associamo un environment detto **Lexical Environment** [[Environment]] dove "vivono" le variabili e funzioni interne alla funzione eseguita. Se una funzione esegue un'altra funzione, si dice che crea una **Closure**, una **Chiusura**, come se avvolgesse l'esecuzione della funzione interna e tutto il suo stato permane. Per questo posso accedere, dalle funzioni più interne dette **Inner**, le variabili delle funzioni dette **Outer**. Il Global Execution Context sarà l'Outer Function più esterna ed è il motivo per cui il suo **Scope** è **Globale** ed accessibile a tutti.
+  Nel contesto di esecuzione globale ho tutto ciò che non è in una funzione, viene associato con un **Global Object** che nel Browser corrisponde alla **Window**. Quando creo una proprietà nel Global Scope di fatto è una proprietà dell'oggetto globale:
 
 ```
 var nome = 'Lorenzo';
 console.log(nome === window.nome); // true
 ```
-* Hosting:
+
+  Per ogni contesto di esecuzione, alla sua creazione, ho associato un oggetto che ha tre proprietà: 
+    - **Variable Object (VO)** che contiene le variabili e le funzioni dichiarate e i parametri formali (argomenti) delle firme delle funzioni. Per ogni funzione avrò una reference alla funzione, per ogni variabile avrò una proprietà impostata ad **undefined**;
+    - **Scope Chain**: che contiene il VO corrente e quello dei suoi contesti parent (precedenti). Ogni funzione crea uno scope;
+    - **This**: in una chiamata di funzione dal global scope o come innerFunction di un metodo di un Object, il this punterà al global object (window se l'env è un browser), in una chiamata di metodo punterà all'oggetto che chiama il metodo, in una invocazione con il new sarà l'oggetto che ritorniamo, oppure lo impostiamo noi tramite una call(), apply() o bind();
+* **Hosting**: durante la fase di creazione del mio Execution Contest, alla creazione delle proprietà che rappresentano le variabili e le funzioni ho l'"effetto hoisting", che significa che saranno disponibili prima della fase di esecuzione del contesto stesso. La differenza è che la funzione è disponibile con il suo body perché ho una reference, mentre una variabile sarà impostata ad undefined ed il suo valore sarà definito solo nella fase di esecuzione del contesto. La fase di esecuzione del contesto avviene subito dopo la fase di creazione. L'Hoisting, in parole semplici, significa "portare su", cioè conoscere già nella prima riga del codice della funzione stessa, le variaibli e le funzioni disponibili; Le function declaration saranno sempre hoisted, mentre le function expression no. Sai la differenza?
 * Codice:
   ```
   setTimeout(function() { console.log(this)}, 1000);
   ```
 
-[Lexical environment and function scope - StackOverflow](https://stackoverflow.com/questions/12599965/lexical-environment-and-function-scope)
-[The JavaScript Lexical Environment Explained - Youtube](https://www.youtube.com/watch?v=1qXypjZu0sU)
-
-
+* [Lexical environment and function scope - StackOverflow](https://stackoverflow.com/questions/12599965/lexical-environment-and-function-scope)
+* [The JavaScript Lexical Environment Explained - Youtube](https://www.youtube.com/watch?v=1qXypjZu0sU)
+* [Variable Object](http://dmitrysoshnikov.com/ecmascript/chapter-2-variable-object/)
+* [This](https://john-dugan.com/this-in-javascript/)
+  
 ## Le nuove caratteristiche di JavaScript ES6
 Duration: 0:30:00
 

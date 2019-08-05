@@ -3,11 +3,11 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2019-08-02T13:05:49+02:00",
+  "updated": "2019-08-05T13:06:50+02:00",
   "id": "ecmascript-6",
   "duration": 45,
   "title": "Introduzione ad ECMAScript 6",
-  "summary": "CatLab per imparare ECMAScript 6",
+  "summary": "CatLab per imparare ECMAScript 6 (http://tiny.cc/lab-es6)",
   "source": "catlab.md",
   "theme": "",
   "status": [
